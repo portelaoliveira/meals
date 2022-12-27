@@ -36,7 +36,7 @@ class MealDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
-        backgroundColor: Colors.pink,
+        backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
