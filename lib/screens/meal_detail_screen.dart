@@ -36,7 +36,7 @@ class MealDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -77,8 +77,7 @@ class MealDetailScreen extends StatelessWidget {
                     children: [
                       ListTile(
                         leading: CircleAvatar(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
+                          backgroundColor: Theme.of(context).primaryColor,
                           child: Text(
                             '${index + 1}',
                             style: const TextStyle(color: Colors.white),
