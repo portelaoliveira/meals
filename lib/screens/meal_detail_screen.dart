@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import '../models/meal.dart';
 
 class MealDetailScreen extends StatelessWidget {
-  const MealDetailScreen({Key? key}) : super(key: key);
+  final Function(Meal) onToggleFavorite;
+  final bool Function(Meal) isFavorite;
+
+  const MealDetailScreen(this.onToggleFavorite, this.isFavorite, {Key? key})
+      : super(key: key);
 
   Widget _createSectionTitle(BuildContext context, String title) {
     return Container(
@@ -35,9 +39,8 @@ class MealDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(meal.title),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        centerTitle: true,
+        title: Text(meal.title),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -69,30 +72,34 @@ class MealDetailScreen extends StatelessWidget {
               ),
             ),
             _createSectionTitle(context, 'Passos'),
-            _createSectionContainer(
-              ListView.builder(
-                itemCount: meal.steps.length,
-                itemBuilder: (ctx, index) {
-                  return Column(
-                    children: [
-                      ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          child: Text(
-                            '${index + 1}',
-                            style: const TextStyle(color: Colors.white),
-                          ),
+            _createSectionContainer(ListView.builder(
+              itemCount: meal.steps.length,
+              itemBuilder: (ctx, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        child: Text(
+                          '${index + 1}',
+                          style: const TextStyle(color: Colors.white),
                         ),
-                        title: Text(meal.steps[index]),
                       ),
-                      const Divider(),
-                    ],
-                  );
-                },
-              ),
-            ),
+                      title: Text(meal.steps[index]),
+                    ),
+                    const Divider(),
+                  ],
+                );
+              },
+            )),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(isFavorite(meal) ? Icons.star : Icons.star_border),
+        onPressed: () {
+          onToggleFavorite(meal);
+        },
       ),
     );
   }
